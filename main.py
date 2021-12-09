@@ -6,19 +6,19 @@ from flight_search import FlightSearch
 
 
 data_manager = DataManager()
-sheet_data = data_manager.get_flight_data()
+sheet_data = data_manager.get_flight_data(call_sheety=False)
 pprint(sheet_data)
 
-for row in sheet_data:
-    iata_code = row["iataCode"]
-    city = row["city"]
-    id = row["id"]
-    if iata_code == "":
-        flight_out = FlightSearch(city)
-        code_return = flight_out.return_iata()
-        row.update({'iataCode': code_return})
-        data_manager.put_flight_data(id)
-print(sheet_data)
+if sheet_data[0]["iataCode"] != "":
+    flight_search = FlightSearch()
+    for row in sheet_data:
+        row["iataCode"] = flight_search.return_iata(row["city"])
+        flight_search.find_cheap_flights(row["city"])
+    print(f"sheet_data:\n {sheet_data}")
+
+    data_manager.flight_data = sheet_data
+    # data_manager.put_flight_data()
+
 
 
 

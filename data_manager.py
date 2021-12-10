@@ -15,7 +15,7 @@ class DataManager:
         self.flight_data = {}
 
     def get_flight_data(self, call_sheety: bool = False) -> list:
-        """ Get flight info from spreadsheet """
+        """ Get flight info from spreadsheet. Test with local JSON. """
         if call_sheety:
             flight_response = requests.get(url=self.flight_endpoint, headers=self.headers)
             flight_response.raise_for_status()
@@ -36,6 +36,7 @@ class DataManager:
         return self.flight_data
 
     def put_flight_data(self):
+        """ send flight data to Google spreadsheet """
         for city in self.flight_data:
             new_data = {
                 "price": {

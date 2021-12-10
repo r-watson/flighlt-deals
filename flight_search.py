@@ -2,11 +2,11 @@ import os
 from dotenv import load_dotenv
 import requests
 import datetime
+
 load_dotenv(r"G:\My Drive\Programming\Python\EnvironmentVariables\.env.txt")
 API_URL = "https://tequila-api.kiwi.com"
 HEADERS = {
     "apikey": os.getenv("TEQUILA_API"),
-    "Content-Encoding": "gzip",
 }
 
 
@@ -15,7 +15,8 @@ class FlightSearch():
 
     def return_iata(self, city):
         query = {
-            "term": city
+            "term": city,
+            "location_types": "city",
         }
         request = requests.get(f"{API_URL}/locations/query", headers=HEADERS, params=query)
         print(request.text)
@@ -36,9 +37,12 @@ class FlightSearch():
             "max_stopovers": 0,
             "nights_in_dst_from": 7,
             "nights_in_dst_to": 28,
+            "flight_type": "round",
             "curr": "GBP",
+            "limit": 10,
         }
         request = requests.get(f"{API_URL}/v2/search", params=params, headers=HEADERS)
-        print(request.text)
+        # print(request.text)
         request.raise_for_status()
-        print(request.json())
+        all_flights = request.json()
+        return all_flights

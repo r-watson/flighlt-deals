@@ -26,9 +26,9 @@ for row in sheet_data:
     all_flights = flight_search.find_cheap_flights(row["iataCode"])
     flight_data = FlightData(all_flights)
     flight_data.display_flights()
-    if row["lowestPrice"] > all_flights["data"][0]["price"]:
+    current_price = all_flights["data"][0]["price"]
+    if row["lowestPrice"] > current_price:
         notification_manager.send_text(all_flights["data"][0])
-
 
 
 

@@ -17,15 +17,15 @@ class NotificationManager:
         outbound_date = (fdata['route'][0]['utc_departure'].split("T"))[0]
         inbound_date = (fdata['route'][1]['utc_departure'].split("T"))[0]
 
-        client = Client(account_sid, auth_token)
-
-        message = client.messages \
-            .create(
-            body=f"Low price alert! Only £{flight_data['price']} to fly from {flight_data['cityFrom']}-"
-                 f"{flight_data['cityCodeFrom']} to {flight_data['cityTo']}-{flight_data['cityCodeTo']}, "
-                 f"from {outbound_date} to {inbound_date}.",
-            from_=twilio_phone,
-            to=my_phone,
-        )
-
-        print(message.sid)
+        # client = Client(account_sid, auth_token)
+        #
+        # message = client.messages \
+        #     .create(
+        #     body=f"Low price alert! Only £{flight_data['price']} to fly from {flight_data['cityFrom']}-"
+        #          f"{flight_data['cityCodeFrom']} to {flight_data['cityTo']}-{flight_data['cityCodeTo']}, "
+        #          f"from {outbound_date} to {inbound_date}.",
+        #     from_=twilio_phone,
+        #     to=my_phone,
+        # )
+        #
+        # print(message.sid)
